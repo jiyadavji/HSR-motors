@@ -159,6 +159,7 @@ body{
 
 /* Key-Value */
 .kv{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px}
+.kv dt, .kv dd { margin: 0; }
 .kv .k{color:var(--sub); font-size:12px}
 .kv .v{font-weight:600}
 
@@ -191,6 +192,18 @@ body{
 /* Footer */
 .main-footer{
   margin:18px 22px 28px; color:var(--sub); text-align:center; font-size:12px
+}
+
+/* Screen-reader only (added for accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 /* Responsive */
