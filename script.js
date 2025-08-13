@@ -1,3 +1,4 @@
+/* ---------- NAV: screen switching ---------- */
 const navBtns = document.querySelectorAll('.nav-btn');
 const screens = document.querySelectorAll('.screen');
 const pageTitle = document.getElementById('page-title');
@@ -12,6 +13,7 @@ navBtns.forEach(btn => {
   });
 });
 
+/* ---------- SAMPLE DATA ---------- */
 const leadsData = [
   { name:'Rahul Mehta', phone:'+91 90000 11111', source:'Website',   status:'New',       owner:'Priya Sharma', created:'2025-08-10' },
   { name:'Priya Sharma', phone:'+91 90000 22222', source:'Google Ads',status:'Converted', owner:'Rahul Mehta',  created:'2025-08-09' },
@@ -25,6 +27,7 @@ const leadsData = [
   { name:'Sneha Iyer',   phone:'+91 90000 10101', source:'Event',     status:'Converted', owner:'Rahul Mehta',  created:'2025-08-04' },
 ];
 
+/* ---------- DASHBOARD AI lists ---------- */
 const aiTop = [
   { n:'Rahul Mehta', s:0.82, src:'Website' },
   { n:'Priya Sharma', s:0.79, src:'Google Ads' },
@@ -42,6 +45,7 @@ document.getElementById('auto-insights').innerHTML = [
   '📩 Auto-send WhatsApp nudge after missed call'
 ].map(t=>`<li>${t}</li>`).join('');
 
+/* ---------- TABLE + FILTERS + PAGINATION ---------- */
 const tbody = document.querySelector('#leads-table tbody');
 const statusSel = document.getElementById('f-status');
 const sourceSel = document.getElementById('f-source');
@@ -97,6 +101,7 @@ function renderTable(){
   pageInfo.textContent = `Page ${page} of ${totalPages}`;
   prevBtn.disabled = page<=1; nextBtn.disabled = page>=totalPages;
 
+  // link to details
   document.querySelectorAll('.lead-link').forEach(a=>{
     a.addEventListener('click',(e)=>{
       e.preventDefault();
@@ -116,6 +121,7 @@ nextBtn.addEventListener('click', ()=>{ page=page+1; renderTable(); });
 
 renderTable();
 
+/* ---------- EXPORT CSV ---------- */
 document.getElementById('export-btn').addEventListener('click', ()=>{
   const headers = ['Lead Name','Contact','Source','Status','Owner','Created'];
   const csv = [headers.join(',')].concat(
@@ -128,13 +134,16 @@ document.getElementById('export-btn').addEventListener('click', ()=>{
   URL.revokeObjectURL(url);
 });
 
+/* ---------- ADD LEAD (mock) ---------- */
 document.getElementById('add-lead-btn').addEventListener('click', ()=>{
   const n = `New Lead ${Math.floor(Math.random()*1000)}`;
   leadsData.unshift({ name:n, phone:'+91 90000 00000', source:'Website', status:'New', owner:'Auto Assign', created:new Date().toISOString().slice(0,10) });
   applyFilters();
+  // small KPI bump
   document.getElementById('kpi-total').textContent = Number(document.getElementById('kpi-total').textContent)+1;
 });
 
+/* ---------- DETAILS: populate from a selected lead ---------- */
 function showDetails(name){
   const lead = leadsData.find(l=>l.name===name) || leadsData[0];
   document.getElementById('d-name').textContent = lead.name;
@@ -146,6 +155,7 @@ function showDetails(name){
   st.textContent = lead.status;
   st.className = 'chip ' + ({Converted:'good', Lost:'bad', Contacted:'info', New:'info'}[lead.status] || 'info');
 
+  // prediction (mock based on status)
   const score = lead.status==='Converted' ? 0.9 : lead.status==='Contacted' ? 0.72 : lead.status==='New' ? 0.55 : 0.2;
   document.getElementById('gauge-fill').style.width = (score*100)+'%';
   document.getElementById('gauge-text').textContent = Math.round(score*100)+'%';
@@ -162,12 +172,14 @@ function showDetails(name){
     `<li><b>Lead Created</b> — ${new Date(lead.created).toLocaleDateString('en-IN',{month:'short', day:'2-digit', year:'numeric'})}</li>`
   ].join('');
 
+  // switch to details screen
   navBtns.forEach(b=>b.classList.remove('active'));
   document.querySelector('.nav-btn[data-target="details"]').classList.add('active');
   screens.forEach(s=>s.classList.toggle('active', s.id==='details'));
   pageTitle.textContent = 'Lead Details';
 }
 
+/* ---------- CHARTS ---------- */
 function makeCharts(){
   const trendCtx = document.getElementById('trendChart');
   const srcCtx   = document.getElementById('sourceChart');
@@ -206,6 +218,7 @@ function makeCharts(){
 }
 document.addEventListener('DOMContentLoaded', makeCharts);
 
+/* ---------- Simple rule button ---------- */
 document.getElementById('rule-btn')?.addEventListener('click', ()=>{
-  alert('Rule editor is not implemented in this demo.');
+  alert('Rule editor is not implemented in this demo. (You can describe the automation logic in your submission.)');
 });
