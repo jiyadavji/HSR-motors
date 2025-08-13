@@ -27,6 +27,8 @@
         <button class="nav-btn" data-target="leads"><span>Lead Listing</span></button>
         <button class="nav-btn" data-target="details"><span>Lead Details</span></button>
         <button class="nav-btn" data-target="management"><span>Lead Management</span></button>
+        <div class="nav-sep"></div>
+        
       </nav>
 
       <footer class="side-footer">
@@ -41,7 +43,6 @@
         <h1 id="page-title">Dashboard</h1>
         <div class="top-actions">
           <div class="search">
-            <label for="global-search" class="sr-only">Search leads, reps, or sources</label>
             <input id="global-search" type="search" placeholder="Search leads, reps, sources…" />
           </div>
           <button class="pill ghost" id="export-btn">Export</button>
@@ -79,12 +80,12 @@
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><h2>Weekly Lead Trend</h2></div>
-            <canvas id="trendChart" height="140" aria-label="Line chart showing weekly lead trends"></canvas>
+            <canvas id="trendChart" height="140"></canvas>
           </div>
 
           <div class="card">
             <div class="card-head"><h2>Lead Source Mix</h2></div>
-            <canvas id="sourceChart" height="140" aria-label="Doughnut chart showing lead source distribution"></canvas>
+            <canvas id="sourceChart" height="140"></canvas>
           </div>
         </div>
 
@@ -125,9 +126,7 @@
             <option>Referral</option>
             <option>Event</option>
           </select>
-          <label for="f-from" class="sr-only">From date</label>
           <input type="date" id="f-from" />
-          <label for="f-to" class="sr-only">To date</label>
           <input type="date" id="f-to" />
           <button class="pill" id="apply-filters">Apply</button>
           <button class="pill ghost" id="reset-filters">Reset</button>
@@ -137,19 +136,19 @@
           <span class="icon">⚡</span>
           <span><b>Automation:</b> 3 leads not contacted in 48h. Assign follow-ups?</span>
           <span class="spacer"></span>
-          <button class="pill tiny" aria-label="Assign follow-ups to overdue leads">Assign Now</button>
+          <button class="pill tiny">Assign Now</button>
         </div>
 
         <div class="table-wrap">
           <table class="table" id="leads-table" aria-label="Lead listing">
             <thead>
               <tr>
-                <th scope="col">Lead Name</th>
-                <th scope="col">Contact</th>
-                <th scope="col">Source</th>
-                <th scope="col">Status</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Created</th>
+                <th>Lead Name</th>
+                <th>Contact</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th>Owner</th>
+                <th>Created</th>
               </tr>
             </thead>
             <tbody><!-- filled by JS --></tbody>
@@ -168,18 +167,18 @@
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><h2>Lead Profile</h2></div>
-            <dl class="kv">
-              <dt class="k">Name</dt><dd class="v" id="d-name">Ananya Gupta</dd>
-              <dt class="k">Phone</dt><dd class="v" id="d-phone">+91 98765 43210</dd>
-              <dt class="k">Email</dt><dd class="v" id="d-email">ananya.g@example.com</dd>
-              <dt class="k">Source</dt><dd class="v" id="d-source">Facebook</dd>
-              <dt class="k">Owner</dt><dd class="v" id="d-owner">Rahul Mehta</dd>
-              <dt class="k">Status</dt><dd class="v"><span class="chip info" id="d-status">Contacted</span></dd>
-            </dl>
+            <div class="kv">
+              <div><span class="k">Name</span><span class="v" id="d-name">Ananya Gupta</span></div>
+              <div><span class="k">Phone</span><span class="v" id="d-phone">+91 98765 43210</span></div>
+              <div><span class="k">Email</span><span class="v" id="d-email">ananya.g@example.com</span></div>
+              <div><span class="k">Source</span><span class="v" id="d-source">Facebook</span></div>
+              <div><span class="k">Owner</span><span class="v" id="d-owner">Rahul Mehta</span></div>
+              <div><span class="k">Status</span><span class="v"><span class="chip info" id="d-status">Contacted</span></span></div>
+            </div>
             <div class="actions-row">
-              <button class="pill" aria-label="Schedule a call with the lead">📞 Schedule Call</button>
-              <button class="pill" aria-label="Send WhatsApp message to the lead">📩 Send WhatsApp</button>
-              <button class="pill ghost" aria-label="Add a note to the lead">📝 Add Note</button>
+              <button class="pill">📞 Schedule Call</button>
+              <button class="pill">📩 Send WhatsApp</button>
+              <button class="pill ghost">📝 Add Note</button>
             </div>
           </div>
 
@@ -207,15 +206,44 @@
       <!-- LEAD MANAGEMENT (KANBAN) -->
       <section id="management" class="screen">
         <div class="kanban" id="kanban">
-          <!-- Kanban columns and cards filled by JS -->
+          <div class="col" data-col="New">
+            <div class="col-head">New</div>
+            <div class="card lead">Rohan Das<br><span class="sub">+91 98•• 22110</span></div>
+            <div class="card lead">Meera Nair<br><span class="sub">Website</span></div>
+          </div>
+
+          <div class="col" data-col="Contacted">
+            <div class="col-head">Contacted</div>
+            <div class="card lead">Ananya Gupta<br><span class="sub">Facebook</span></div>
+            <div class="card lead">Dev Patel<br><span class="sub">Google Ads</span></div>
+          </div>
+
+          <div class="col" data-col="Converted">
+            <div class="col-head">Converted</div>
+            <div class="card lead good">Priya Sharma<br><span class="sub">Referral</span></div>
+          </div>
+
+          <div class="col" data-col="Lost">
+            <div class="col-head">Lost</div>
+            <div class="card lead bad">Karan Verma<br><span class="sub">No budget</span></div>
+          </div>
         </div>
 
-        < ukrainian="🇺🇦" spanish="🇪🇸" french="🇫🇷" german="🇩🇪" russian="🇷🇺" portuguese="🇵🇹" italian="🇮🇹" emoji="🔄" banner="">
+        <div class="banner">
           <span class="icon">🔄</span>
-          <span><b>Automation:</b> Auto-move "New" leads to "Contacted" after 3 days of no reply.</span>
+          <span><b>Automation:</b> Auto-move “New” leads to “Contacted” after 3 days of no reply.</span>
           <span class="spacer"></span>
-          <button class="pill tiny" id="rule-btn" aria-label="Adjust automation rule">Adjust Rule</button>
+          <button class="pill tiny" id="rule-btn">Adjust Rule</button>
         </div>
+      </section>
+
+      
+      <section id="brief" class="screen">
+        <div class="card">
+          <div class="card-head"><h2>Assignment Brief</h2></div>
+          <p>Design a <b>desktop business application</b> for HSR Motors to manage sales leads (internal tool). Focus on clarity, data visibility, and workflow speed for Sales Reps and Managers.</p>
+        </div>
+
       </section>
 
       <footer class="main-footer">
