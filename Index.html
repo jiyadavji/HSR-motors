@@ -7,8 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js for clean corporate charts -->
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
   <script src="script.js" defer></script>
 </head>
@@ -24,22 +23,12 @@
       </div>
 
       <nav class="nav">
-        <button class="nav-btn active" data-target="dashboard" aria-current="page">
-          <span>Dashboard</span>
-        </button>
-        <button class="nav-btn" data-target="leads">
-          <span>Lead Listing</span>
-        </button>
-        <button class="nav-btn" data-target="details">
-          <span>Lead Details</span>
-        </button>
-        <button class="nav-btn" data-target="management">
-          <span>Lead Management</span>
-        </button>
+        <button class="nav-btn active" data-target="dashboard" aria-current="page"><span>Dashboard</span></button>
+        <button class="nav-btn" data-target="leads"><span>Lead Listing</span></button>
+        <button class="nav-btn" data-target="details"><span>Lead Details</span></button>
+        <button class="nav-btn" data-target="management"><span>Lead Management</span></button>
         <div class="nav-sep"></div>
-        <button class="nav-btn" data-target="brief">
-          <span>Brief & Rules</span>
-        </button>
+        <button class="nav-btn" data-target="brief"><span>Brief & Rules</span></button>
       </nav>
 
       <footer class="side-footer">
@@ -48,7 +37,7 @@
       </footer>
     </aside>
 
-    <!-- Main content -->
+    <!-- Main -->
     <main class="main">
       <header class="topbar">
         <h1 id="page-title">Dashboard</h1>
@@ -66,47 +55,36 @@
         <div class="kpi-grid">
           <article class="kpi">
             <div class="kpi-top">
-              <span class="kpi-label">Total Leads</span>
-              <span class="dot"></span>
+              <span class="kpi-label">Total Leads</span><span class="dot"></span>
             </div>
-            <div class="kpi-value">120</div>
+            <div class="kpi-value" id="kpi-total">120</div>
             <div class="kpi-sub">+18% vs last week</div>
           </article>
           <article class="kpi">
-            <div class="kpi-top">
-              <span class="kpi-label">Contacted</span>
-            </div>
-            <div class="kpi-value">68</div>
+            <div class="kpi-top"><span class="kpi-label">Contacted</span></div>
+            <div class="kpi-value" id="kpi-contacted">68</div>
             <div class="kpi-sub">56% contact rate</div>
           </article>
           <article class="kpi success">
-            <div class="kpi-top">
-              <span class="kpi-label">Converted</span>
-            </div>
-            <div class="kpi-value">35</div>
+            <div class="kpi-top"><span class="kpi-label">Converted</span></div>
+            <div class="kpi-value" id="kpi-converted">35</div>
             <div class="kpi-sub">CVR 29.1%</div>
           </article>
           <article class="kpi warn">
-            <div class="kpi-top">
-              <span class="kpi-label">Pending Contact</span>
-            </div>
-            <div class="kpi-value">15</div>
+            <div class="kpi-top"><span class="kpi-label">Pending Contact</span></div>
+            <div class="kpi-value" id="kpi-pending">15</div>
             <div class="kpi-sub">5 overdue (48h)</div>
           </article>
         </div>
 
         <div class="grid-2">
           <div class="card">
-            <div class="card-head">
-              <h2>Weekly Lead Trend</h2>
-            </div>
+            <div class="card-head"><h2>Weekly Lead Trend</h2></div>
             <canvas id="trendChart" height="140"></canvas>
           </div>
 
           <div class="card">
-            <div class="card-head">
-              <h2>Lead Source Mix</h2>
-            </div>
+            <div class="card-head"><h2>Lead Source Mix</h2></div>
             <canvas id="sourceChart" height="140"></canvas>
           </div>
         </div>
@@ -116,24 +94,15 @@
             <div class="card-head">
               <h2>Top Conversion-Ready Leads <span class="pill tiny robot">AI</span></h2>
             </div>
-            <ul class="list">
-              <li><strong>Rahul Mehta</strong> • Score 0.82 • Source: Website</li>
-              <li><strong>Priya Sharma</strong> • Score 0.79 • Source: Google Ads</li>
-              <li><strong>Ananya Gupta</strong> • Score 0.76 • Source: Facebook</li>
-              <li><strong>Karan Verma</strong> • Score 0.71 • Source: Referral</li>
-              <li><strong>Dev Patel</strong> • Score 0.69 • Source: Event</li>
+            <ul class="list" id="ai-top-list">
+              <!-- filled by JS -->
             </ul>
           </div>
 
           <aside class="card insights">
-            <div class="card-head">
-              <h2>Automation Insights <span class="pill tiny">🤖</span></h2>
-            </div>
-            <ul class="insights-list">
-              <li>⚡ 3 high-value leads predicted to convert this week</li>
-              <li>🔔 5 leads not contacted in 48h — schedule follow-ups</li>
-              <li>🔄 New website leads auto-assigned to <b>Priya Sharma</b></li>
-              <li>📩 Auto-send WhatsApp nudge after missed call</li>
+            <div class="card-head"><h2>Automation Insights <span class="pill tiny">🤖</span></h2></div>
+            <ul class="insights-list" id="auto-insights">
+              <!-- filled by JS -->
             </ul>
           </aside>
         </div>
@@ -182,15 +151,13 @@
                 <th>Created</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- Filled by script.js -->
-            </tbody>
+            <tbody><!-- filled by JS --></tbody>
           </table>
         </div>
 
         <div class="pager">
           <button class="pill tiny ghost" id="prev-page">Prev</button>
-          <span id="page-info">Page 1 of 3</span>
+          <span id="page-info">Page 1 of 1</span>
           <button class="pill tiny" id="next-page">Next</button>
         </div>
       </section>
@@ -199,20 +166,15 @@
       <section id="details" class="screen">
         <div class="grid-2">
           <div class="card">
-            <div class="card-head">
-              <h2>Lead Profile</h2>
-            </div>
+            <div class="card-head"><h2>Lead Profile</h2></div>
             <div class="kv">
               <div><span class="k">Name</span><span class="v" id="d-name">Ananya Gupta</span></div>
               <div><span class="k">Phone</span><span class="v" id="d-phone">+91 98765 43210</span></div>
               <div><span class="k">Email</span><span class="v" id="d-email">ananya.g@example.com</span></div>
               <div><span class="k">Source</span><span class="v" id="d-source">Facebook</span></div>
               <div><span class="k">Owner</span><span class="v" id="d-owner">Rahul Mehta</span></div>
-              <div><span class="k">Status</span>
-                <span class="v"><span class="chip info" id="d-status">Contacted</span></span>
-              </div>
+              <div><span class="k">Status</span><span class="v"><span class="chip info" id="d-status">Contacted</span></span></div>
             </div>
-
             <div class="actions-row">
               <button class="pill">📞 Schedule Call</button>
               <button class="pill">📩 Send WhatsApp</button>
@@ -221,53 +183,47 @@
           </div>
 
           <div class="card">
-            <div class="card-head">
-              <h2>AI Prediction <span class="pill tiny robot">AI</span></h2>
-            </div>
+            <div class="card-head"><h2>AI Prediction <span class="pill tiny robot">AI</span></h2></div>
             <p class="muted">This lead has a high conversion probability.</p>
             <div class="gauge">
-              <div class="gauge-fill" style="width:78%"></div>
-              <div class="gauge-text">78%</div>
+              <div class="gauge-fill" id="gauge-fill" style="width:78%"></div>
+              <div class="gauge-text" id="gauge-text">78%</div>
             </div>
-            <ul class="list small">
-              <li>• Engaged with 2 emails last 48h</li>
-              <li>• Viewed pricing page 3×</li>
-              <li>• Responded to WhatsApp within 1h</li>
+            <ul class="list small" id="ai-reasons">
+              <!-- filled by JS -->
             </ul>
           </div>
         </div>
 
         <div class="card">
           <div class="card-head"><h2>Interaction History</h2></div>
-          <ul class="timeline">
-            <li><b>Missed Call</b> — Yesterday 4:12 PM</li>
-            <li><b>Email Sent</b> — Yesterday 10:05 AM</li>
-            <li><b>Lead Created</b> — Aug 08, 2025</li>
+          <ul class="timeline" id="timeline">
+            <!-- filled by JS -->
           </ul>
         </div>
       </section>
 
       <!-- LEAD MANAGEMENT (KANBAN) -->
       <section id="management" class="screen">
-        <div class="kanban">
-          <div class="col">
+        <div class="kanban" id="kanban">
+          <div class="col" data-col="New">
             <div class="col-head">New</div>
             <div class="card lead">Rohan Das<br><span class="sub">+91 98•• 22110</span></div>
             <div class="card lead">Meera Nair<br><span class="sub">Website</span></div>
           </div>
 
-          <div class="col">
+          <div class="col" data-col="Contacted">
             <div class="col-head">Contacted</div>
             <div class="card lead">Ananya Gupta<br><span class="sub">Facebook</span></div>
             <div class="card lead">Dev Patel<br><span class="sub">Google Ads</span></div>
           </div>
 
-          <div class="col">
+          <div class="col" data-col="Converted">
             <div class="col-head">Converted</div>
             <div class="card lead good">Priya Sharma<br><span class="sub">Referral</span></div>
           </div>
 
-          <div class="col">
+          <div class="col" data-col="Lost">
             <div class="col-head">Lost</div>
             <div class="card lead bad">Karan Verma<br><span class="sub">No budget</span></div>
           </div>
@@ -277,7 +233,7 @@
           <span class="icon">🔄</span>
           <span><b>Automation:</b> Auto-move “New” leads to “Contacted” after 3 days of no reply.</span>
           <span class="spacer"></span>
-          <button class="pill tiny">Adjust Rule</button>
+          <button class="pill tiny" id="rule-btn">Adjust Rule</button>
         </div>
       </section>
 
@@ -285,7 +241,7 @@
       <section id="brief" class="screen">
         <div class="card">
           <div class="card-head"><h2>Assignment Brief</h2></div>
-          <p>Design a <b>desktop business application</b> for HSR Motors to manage sales leads (internal tool, not a public website). Focus on clarity, data visibility, and workflow speed for Sales Reps and Managers.</p>
+          <p>Design a <b>desktop business application</b> for HSR Motors to manage sales leads (internal tool). Focus on clarity, data visibility, and workflow speed for Sales Reps and Managers.</p>
         </div>
 
         <div class="grid-2">
@@ -293,7 +249,7 @@
             <div class="card-head"><h2>Do’s ✅</h2></div>
             <ul class="list">
               <li>Use the provided submission template.</li>
-              <li>Show at least 2 core screens (we included 4).</li>
+              <li>Show at least 2 core screens (we included 5).</li>
               <li>Prioritize desktop layouts; keep responsive behavior clean.</li>
               <li>Show automation/AI where it truly helps workflow.</li>
             </ul>
@@ -316,4 +272,4 @@
     </main>
   </div>
 </body>
-  </html>
+</html>
