@@ -105,12 +105,104 @@ body{
 .card h2{margin:0; font-size:16px; font-weight:600}
 
 .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px}
+
+/* KPI */
 .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
 .kpi{
   background:linear-gradient(180deg,#132031,#0f1a28);
   border:1px solid #17263b; border-radius:16px; padding:16px;
 }
-.kpi.success{outline:2px solid var(--ok);}
-.kpi.warn{outline:2px solid var(--warn);}
-.kpi.bad{outline:2px solid var(--bad);}
-.kpi.info{outline:2px solid var(--info);}
+.kpi.success{outline:2px solid var(--ok)}
+.kpi.warn{outline:2px solid var(--warn)}
+.kpi.bad{outline:2px solid var(--bad)}
+.kpi .kpi-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px}
+.kpi .kpi-label{font-size:12px; color:var(--sub)}
+.kpi .kpi-value{font-family:Montserrat; font-weight:700; font-size:28px; letter-spacing:.3px}
+.kpi .kpi-sub{color:var(--sub); font-size:12px}
+.dot{width:8px; height:8px; border-radius:50%; background:var(--brand-2); box-shadow:0 0 0 3px rgba(73,227,194,.12)}
+
+/* Lists / insights */
+.list{list-style:none; padding:0; margin:0}
+.list li{padding:10px 12px; border:1px solid #152338; border-radius:12px; background:#0f1826; margin-bottom:10px}
+.list.small li{padding:8px 10px; font-size:14px}
+.insights .insights-list li{display:flex; gap:10px; align-items:flex-start}
+
+/* Filters */
+.filters{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px}
+.filters select, .filters input[type="date"]{
+  background:#0f1622; border:1px solid #121a28; color:var(--ink);
+  padding:10px 12px; border-radius:10px;
+}
+
+/* Banner */
+.banner{
+  display:flex; align-items:center; gap:12px;
+  background:linear-gradient(180deg,#0f1a29,#0d1724); border:1px solid #142238;
+  border-radius:14px; padding:12px 14px; margin:12px 0;
+}
+.banner .icon{font-size:18px}
+.banner .spacer{flex:1}
+
+/* Table */
+.table-wrap{overflow:auto; border:1px solid #152338; border-radius:16px}
+.table{width:100%; border-collapse:collapse; min-width:820px}
+.table th, .table td{padding:12px 14px; border-bottom:1px solid #132033; text-align:left}
+.table thead th{position:sticky; top:0; background:#0f1826; z-index:1; font-weight:600}
+.table tbody tr:hover{background:#0f1826}
+.chip{
+  padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid transparent;
+}
+.chip.info{background:#132247; border-color:#1b3a7a; color:#b9d1ff}
+.chip.good{background:#0f2a1e; border-color:#1a5c3f; color:#8ff1c1}
+.chip.warn{background:#2a260f; border-color:#655a17; color:#ffe49a}
+.chip.bad{background:#2a1111; border-color:#6a2222; color:#ffb0b0}
+
+/* Key-Value */
+.kv{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px}
+.kv .k{color:var(--sub); font-size:12px}
+.kv .v{font-weight:600}
+
+/* Gauge */
+.gauge{
+  position:relative; background:#0f1622; border:1px solid #142238;
+  border-radius:12px; height:18px; overflow:hidden; margin:8px 0 12px;
+}
+.gauge-fill{
+  height:100%; background:linear-gradient(90deg, var(--brand), var(--brand-2));
+}
+.gauge-text{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff}
+
+/* Timeline */
+.timeline{list-style:none; padding:0; margin:0}
+.timeline li{padding:10px 0; border-bottom:1px dashed #19304c}
+.timeline li:last-child{border-bottom:0}
+
+/* Kanban */
+.kanban{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+.col{background:linear-gradient(180deg,#101724,#0e1522); border:1px solid #152338; border-radius:16px; padding:10px}
+.col-head{font-weight:600; color:var(--sub); margin:6px 4px 10px}
+.lead{cursor:grab}
+.lead.good{outline:1px solid var(--ok)}
+.lead.bad{outline:1px solid var(--bad)}
+
+/* Pager */
+.pager{display:flex; align-items:center; gap:10px; justify-content:flex-end; margin-top:12px}
+
+/* Footer */
+.main-footer{
+  margin:18px 22px 28px; color:var(--sub); text-align:center; font-size:12px
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:sticky; top:0; z-index:5; border-right:none; border-bottom:1px solid #0f141c; border-radius:0 0 12px 12px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+  .kanban{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width: 600px){
+  .kpi-grid{grid-template-columns:1fr}
+  .kanban{grid-template-columns:1fr}
+  .search input{width:160px}
+}
