@@ -15,17 +15,50 @@ navBtns.forEach(btn => {
 
 /* ---------- SAMPLE DATA ---------- */
 const leadsData = [
-  { name:'Rahul Mehta', phone:'+91 90000 11111', source:'Website',   status:'New',       owner:'Priya Sharma', created:'2025-08-10' },
-  { name:'Priya Sharma', phone:'+91 90000 22222', source:'Google Ads',status:'Converted', owner:'Rahul Mehta',  created:'2025-08-09' },
-  { name:'Ananya Gupta', phone:'+91 90000 33333', source:'Facebook',  status:'Contacted', owner:'Rahul Mehta',  created:'2025-08-08' },
-  { name:'Karan Verma',  phone:'+91 90000 44444', source:'Referral',  status:'Lost',      owner:'Dev Patel',    created:'2025-08-07' },
-  { name:'Dev Patel',    phone:'+91 90000 55555', source:'Event',     status:'Contacted', owner:'Priya Sharma', created:'2025-08-06' },
-  { name:'Meera Nair',   phone:'+91 90000 66666', source:'Website',   status:'New',       owner:'Priya Sharma', created:'2025-08-06' },
-  { name:'Rohan Das',    phone:'+91 90000 77777', source:'Referral',  status:'Converted', owner:'Rahul Mehta',  created:'2025-08-05' },
-  { name:'Devika Rao',   phone:'+91 90000 88888', source:'Google Ads',status:'New',       owner:'Dev Patel',    created:'2025-08-05' },
-  { name:'Aman Singh',   phone:'+91 90000 99999', source:'Facebook',  status:'Lost',      owner:'Priya Sharma', created:'2025-08-04' },
-  { name:'Sneha Iyer',   phone:'+91 90000 10101', source:'Event',     status:'Converted', owner:'Rahul Mehta',  created:'2025-08-04' },
+  { name:'Rahul Mehta', phone:'+91 90000 11111', source:'Website',   status:'New',       owner:'Priya Sharma', created:'2025-08-13' },
+  { name:'Priya Sharma', phone:'+91 90000 22222', source:'Google Ads',status:'Converted', owner:'Rahul Mehta',  created:'2025-08-12' },
+  { name:'Ananya Gupta', phone:'+91 90000 33333', source:'Facebook',  status:'Contacted', owner:'Rahul Mehta',  created:'2025-08-11' },
+  { name:'Karan Verma',  phone:'+91 90000 44444', source:'Referral',  status:'Lost',      owner:'Dev Patel',    created:'2025-08-10' },
+  { name:'Dev Patel',    phone:'+91 90000 55555', source:'Event',     status:'Contacted', owner:'Priya Sharma', created:'2025-08-09' },
+  { name:'Meera Nair',   phone:'+91 90000 66666', source:'Website',   status:'New',       owner:'Priya Sharma', created:'2025-08-09' },
+  { name:'Rohan Das',    phone:'+91 90000 77777', source:'Referral',  status:'Converted', owner:'Rahul Mehta',  created:'2025-08-08' },
+  { name:'Devika Rao',   phone:'+91 90000 88888', source:'Google Ads',status:'New',       owner:'Dev Patel',    created:'2025-08-08' },
+  { name:'Aman Singh',   phone:'+91 90000 99999', source:'Facebook',  status:'Lost',      owner:'Priya Sharma', created:'2025-08-07' },
+  { name:'Sneha Iyer',   phone:'+91 90000 10101', source:'Event',     status:'Converted', owner:'Rahul Mehta',  created:'2025-08-07' },
 ];
+
+/* ---------- KANBAN DATA (added for dynamic rendering) ---------- */
+const kanbanData = {
+  New: [
+    { name: 'Rohan Das', sub: '+91 98•• 22110', cls: '' },
+    { name: 'Meera Nair', sub: 'Website', cls: '' }
+  ],
+  Contacted: [
+    { name: 'Ananya Gupta', sub: 'Facebook', cls: '' },
+    { name: 'Dev Patel', sub: 'Google Ads', cls: '' }
+  ],
+  Converted: [
+    { name: 'Priya Sharma', sub: 'Referral', cls: 'good' }
+  ],
+  Lost: [
+    { name: 'Karan Verma', sub: 'No budget', cls: 'bad' }
+  ]
+};
+
+function renderKanban() {
+  const kanban = document.getElementById('kanban');
+  if (!kanban) return;
+  kanban.innerHTML = Object.keys(kanbanData).map(col => `
+    <div class="col" data-col="${col}">
+      <div class="col-head">${col}</div>
+      ${kanbanData[col].map(lead => `
+        <div class="card lead ${lead.cls}">
+          ${lead.name}<br><span class="sub">${lead.sub}</span>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
 
 /* ---------- DASHBOARD AI lists ---------- */
 const aiTop = [
@@ -75,8 +108,13 @@ function applyFilters(){
     const hit = !q || Object.values(x).join(' ').toLowerCase().includes(q);
     const sOk = !statusSel.value || x.status === statusSel.value;
     const srcOk = !sourceSel.value || x.source === sourceSel.value;
-    const fromOk = !fromInp.value || new Date(x.created) >= new Date(fromInp.value);
-    const toOk = !toInp.value || new Date(x.created) <= new Date(toInp.value);
+    let fromOk = true, toOk = true;
+    try {
+      fromOk = !fromInp.value || new Date(x.created) >= new Date(fromInp.value);
+      toOk = !toInp.value || new Date(x.created) <= new Date(toInp.value);
+    } catch (e) {
+      // Invalid date; skip filter
+    }
     return hit && sOk && srcOk && fromOk && toOk;
   });
   page = 1;
@@ -192,7 +230,9 @@ function makeCharts(){
         label:'Leads',
         data:[18,22,15,25,20,10,12],
         tension:.35,
-        fill:true
+        fill:true,
+        borderColor: 'var(--brand)',
+        backgroundColor: 'rgba(32, 183, 255, 0.2)'
       }]
     },
     options: {
@@ -208,7 +248,10 @@ function makeCharts(){
     type:'doughnut',
     data:{
       labels:['Website','Google Ads','Facebook','Referral','Event'],
-      datasets:[{ data:[32,28,18,12,10] }]
+      datasets:[{ 
+        data:[32,28,18,12,10],
+        backgroundColor: ['#20b7ff', '#49e3c2', '#4f8cff', '#2ecc71', '#f1c40f']
+      }]
     },
     options:{
       plugins:{ legend:{ position:'bottom', labels:{ color:'#e8ecf3' } } },
@@ -216,9 +259,14 @@ function makeCharts(){
     }
   });
 }
-document.addEventListener('DOMContentLoaded', makeCharts);
 
 /* ---------- Simple rule button ---------- */
 document.getElementById('rule-btn')?.addEventListener('click', ()=>{
   alert('Rule editor is not implemented in this demo. (You can describe the automation logic in your submission.)');
+});
+
+/* ---------- Init (added renderKanban call) ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  makeCharts();
+  renderKanban();
 });
